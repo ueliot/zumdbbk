@@ -8,6 +8,7 @@
 
 ## Installation
 
+
 ```bash
 
 $ npm install
@@ -24,10 +25,10 @@ $ docker-compose up -d
 $ docker-compose up -d
 $ npm run start:dev
 
-# production mode
-$ npm run start:prod
-```
 
+
+```
+### Read how use in ZumbachDB.doc
 
 ## License
 
