@@ -3,6 +3,7 @@ import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { SparepartsModule } from './spareparts/spareparts.module';
 import { CommonModule } from './common/common.module';
+import { FilesModule } from './files/files.module';
 
 
 @Module({
@@ -18,7 +19,8 @@ import { CommonModule } from './common/common.module';
     synchronize: true,
   }),
   SparepartsModule,
-  CommonModule
+  CommonModule,
+  FilesModule
 ],  
 })
 export class AppModule {}
