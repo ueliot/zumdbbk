@@ -7,6 +7,7 @@ import { Sparepart, SparepartImage } from './entities';
 import { PaginationDto } from 'src/common/dtos/pagination.dto';
 import {validate as isUUID} from 'uuid';
 import { error } from 'console';
+import { User } from 'src/auth/entities/user.entity';
 
 @Injectable()
 export class SparepartsService {
@@ -27,13 +28,14 @@ export class SparepartsService {
 
 
   //---------------------------------------------------------//
-  async create(createSparepartDto: CreateSparepartDto) {
+  async create(createSparepartDto: CreateSparepartDto, user: User) {
 
     const {images=[], ...spareDetail} = createSparepartDto
     
     try {
       const sparepart = this.sparepartRepository.create({
         ...spareDetail,
+        user,
         images: images.map( image => this.sparepartImageRepository.create({url: image}) )
       });
       await this.sparepartRepository.save(sparepart);
@@ -82,7 +84,7 @@ export class SparepartsService {
     }
   }
   //--------------------------------------------------------//
-  async update(id: string, updateSparepartDto: UpdateSparepartDto) {
+  async update(id: string, updateSparepartDto: UpdateSparepartDto, user: User) {
     const {images, ...toUpdate} = updateSparepartDto;
     const sparepart = await this.sparepartRepository.preload({id, ...toUpdate});
     if (!sparepart) throw new NotFoundException(`Product whit id: ${id} not found`);
@@ -99,6 +101,7 @@ export class SparepartsService {
         } else {
           //sparepart.images??
         }
+      sparepart.user = user;
       await queryRunner.manager.save(sparepart);
       await queryRunner.commitTransaction();
       await queryRunner.release();

@@ -3,14 +3,20 @@ import { SparepartsService } from './spareparts.service';
 import { CreateSparepartDto } from './dto/create-sparepart.dto';
 import { UpdateSparepartDto } from './dto/update-sparepart.dto';
 import { PaginationDto } from 'src/common/dtos/pagination.dto';
+import { Auth } from 'src/auth/decorators/auth.decorator';
+import { ValidRoles } from 'src/auth/interfaces/valid-roles';
+import { GetUser } from 'src/auth/decorators/get-user.decorator';
+import { User } from 'src/auth/entities/user.entity';
 
 @Controller('spareparts')
 export class SparepartsController {
   constructor(private readonly sparepartService: SparepartsService) {}
 
   @Post()
-  create(@Body() createSparepartDto: CreateSparepartDto) {
-    return this.sparepartService.create(createSparepartDto);
+  @Auth( ValidRoles.admin)
+  create(@Body() createSparepartDto: CreateSparepartDto,
+         @GetUser() user: User,) {
+    return this.sparepartService.create(createSparepartDto, user);
   }
 
   @Get()
@@ -25,13 +31,16 @@ export class SparepartsController {
   }
 
   @Patch(':id')
+  @Auth( ValidRoles.admin)
   update(
     @Param('id', ParseUUIDPipe) id: string, 
-    @Body() updateSparepartDto: UpdateSparepartDto) {
-    return this.sparepartService.update(id, updateSparepartDto);
+    @Body() updateSparepartDto: UpdateSparepartDto,
+    @GetUser() user: User) {
+    return this.sparepartService.update(id, updateSparepartDto, user);
   }
 
   @Delete(':id')
+  @Auth( ValidRoles.admin)
   remove(@Param('id', ParseUUIDPipe) id: string) {
     return this.sparepartService.remove(id);
   }

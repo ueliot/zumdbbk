@@ -1,5 +1,6 @@
-import { BeforeInsert, BeforeUpdate, Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { BeforeInsert, BeforeUpdate, Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { SparepartImage } from "./";
+import { User } from "src/auth/entities/user.entity";
 
 
 @Entity({name: 'spareparts'})
@@ -57,6 +58,13 @@ export class Sparepart {
 
     
     
+    @ManyToOne(
+        ()=> User,
+        (user)=> user.sparepart,
+        {eager: true}
+
+    )
+    user: User;
 
 
     @BeforeInsert()
