@@ -26,6 +26,10 @@ export class CreateSparepartDto {
 
     @IsString()
     @IsOptional()
+    loc: string;
+
+    @IsString()
+    @IsOptional()
     comments: string;
 
 

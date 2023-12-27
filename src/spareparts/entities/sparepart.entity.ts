@@ -31,11 +31,17 @@ export class Sparepart {
     })
     subfamily1: string;
 
-      @Column({
+    @Column({
         type: 'text',
         nullable: true,
     })
     subfamily2: string;
+
+    @Column({
+        type: 'text',
+        nullable: true,
+    })
+    loc: string;
 
     @Column({
         type: 'text',
@@ -70,7 +76,7 @@ export class Sparepart {
     @BeforeInsert()
     checkArticletoCreate(){
         this.article=this.article
-        .toLowerCase()
+        .toUpperCase()
         .replaceAll(' ','.')        
     }
 
@@ -78,7 +84,7 @@ export class Sparepart {
     @BeforeUpdate()
     checkArticletoUpdate(){
         this.article=this.article
-        .toLowerCase()
+        .toUpperCase()
         .replaceAll(' ','.')  
     }
     

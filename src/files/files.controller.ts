@@ -25,12 +25,14 @@ export class FilesController {
     
   }))
   uploadFile(@UploadedFile() file: Express.Multer.File) {
+    console.log(file);
     if(!file){
       throw new BadRequestException(`Make sure that the file is a image`);
     }
     //console.log({fileInController: file})
     const secureUrl = `${this.configService.get('HOST_API')}/files/sparepart/${file.filename}`;
-    return {secureUrl};
+    const image = `${file.filename}`
+    return {image, secureUrl};
   }
   //---------------------------------------------//
 

@@ -18,12 +18,11 @@ $ npm install
 
 ```bash
 # development up BD
+$ docker volume create postgres_db
 $ docker-compose up -d
 
 
-# watch mode dev
-$ docker-compose up -d
-$ npm run start:dev
+
 
 
 
