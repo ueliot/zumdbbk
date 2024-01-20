@@ -25,7 +25,7 @@ export class SparepartsController {
     return this.sparepartService.findAll(paginationDto);
   }
 
-  @Get('find/:term')
+  @Get('search/:term')
   findfind(@Query() paginationDto: PaginationDto, @Param('term') term: string) {
     //console.log(paginationDto);
     return this.sparepartService.findfind(paginationDto, term);

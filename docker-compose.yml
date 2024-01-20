@@ -1,31 +1,15 @@
- 
-  version: '3'
-  
-  
-  services:
-    zumbach_bk:
-      # image: node
-      container_name: Zumbach_BK
-      ports:
-        - "3001:3000"
-      build:  .
-      command: npm run start:dev
-    db:
-      image:  postgres:15.2
-      restart:  always
-      ports:
-        - "5432:5432"
-      environment:
-        POSTGRES_PASSWORD:  ${DB_PASSWORD}
-        POSTGRES_DB:  ${DB_NAME}
-      container_name: ${DB_HOST}
-      volumes:
-        - postgres_db:/var/lib/posgresql/data
-  volumes:
-    postgres_db:
-      external: true
-        
+version: '3'
 
 
-
-    
+services:
+  db:
+    image: postgres:14.3
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    container_name: ${DB_NAME}
+    volumes:
+      - ./postgres:/var/lib/postgresql/data

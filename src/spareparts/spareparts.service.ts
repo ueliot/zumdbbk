@@ -2,7 +2,7 @@ import { BadRequestException, Injectable, InternalServerErrorException, Logger, 
 import { CreateSparepartDto } from './dto/create-sparepart.dto';
 import { UpdateSparepartDto } from './dto/update-sparepart.dto';
 import { InjectRepository } from '@nestjs/typeorm';
-import { DataSource, Like, Repository } from 'typeorm';
+import { DataSource, ILike, Like, Repository } from 'typeorm';
 import { Sparepart, SparepartImage } from './entities';
 import { PaginationDto } from 'src/common/dtos/pagination.dto';
 import {validate as isUUID} from 'uuid';
@@ -63,12 +63,12 @@ export class SparepartsService {
 
 
   async findfind(paginationDto: PaginationDto, term: string,) {
-    const { limit=10, offset=0} = paginationDto;    
+    const { limit=100, offset=0} = paginationDto;    
     const spareparts: Sparepart[] = await this.sparepartRepository.find({
       where: [
-        {article: Like(`%${term}%`)},
-        {family: Like(term)} 
-        
+        {article: ILike(`%${term}%`)},
+        {family: ILike(term)} 
+        //changed Like by ILike it is CaseInsensitive      
       ],
       
       take: limit,
