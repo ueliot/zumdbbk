@@ -10,6 +10,8 @@
         - "3001:3000"
       build:  .
       command: npm run start:dev
+      volumes:
+        - zumdb_photos: ./static
     db:
       image:  postgres:15.2
       restart:  always
@@ -20,10 +22,13 @@
         POSTGRES_DB:  ${DB_NAME}
       container_name: ${DB_HOST}
       volumes:
-        - postgres_db:/var/lib/posgresql/data
+        - zumdb_postgres:/var/lib/posgresql/data
   volumes:
-    postgres_db:
+    zumdb_postgres:
       external: true
+    zumdb_photos:
+      external: true
+    
         
 
 
