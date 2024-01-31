@@ -4,6 +4,7 @@
 postgres/
 .env
 .gitignore
+/static
 
 # Logs
 logs
